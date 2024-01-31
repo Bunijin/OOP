@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Behavior {
 
     // Fields to represent the behavior of a bird
+    public int i = 0;
     private String name;
     private String gender;
     private int age;
@@ -80,17 +81,16 @@ public class Behavior {
         }
     }
 
-    String breed(Behavior parent) {
+    Behavior breed(Behavior parent) {
         if(parent.gender == null)  {
             return null;
         } else if (("Male".equals(this.gender) && "Female".equals(parent.gender))
                 || ("Female".equals(this.gender) && "Male".equals(parent.gender))) {
             String left = this.name.substring(0, 1);
             String right = parent.name.substring(0, 1);
-            char first = left.charAt(0);
-            char second = right.charAt(0);
+            String newName = left.charAt(0) + right.charAt(0);
             System.out.println("\"" + this.name + "\" successfully bred with \"" + parent.name + "\"");
-            return String.valueOf(first) + String.valueOf(second);
+            return new Behavior(newName,getRandomGender(),1);
         } else {
             System.out.println("Cannot breed with the same gender.");
             return null;
@@ -100,5 +100,21 @@ public class Behavior {
     void birdDetails() {
         System.out.println("name: " + this.name + ", gender: " + this.gender + ", age: " + this.age
         + ", bird weight: " + this.birdWeight + " g, food weight: " + this.totalFoodWeight + " g");
+    }
+    
+    private static String getRandomGender() {
+        String gender = null;
+        i++;
+        if (i > 2) {
+            gender = Math.random() < 0.5 ? "Male" : "Female";
+        } else {
+            if (i == 1) {
+                gender = "Male"; // Assign Male gender for bird 1
+            }
+            if (i == 2) {
+                gender = "Female"; // Assign Female gender for bird 2
+            }
+        }
+        return gender;
     }
 }
