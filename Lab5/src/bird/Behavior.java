@@ -2,23 +2,59 @@ package bird;
 
 import java.util.ArrayList;
 
-public class Behavior {
+public final class Bird {
 
     // Fields to represent the behavior of a bird
-    public int i = 0;
     private String name;
     private String gender;
     private int age;
-    private int birdWeight = 120;
+    private final int birdWeight = 120;
     private int totalFoodWeight = 0;
-    private ArrayList<String> consumedItems = new ArrayList<String>();
-    private ArrayList<Integer> foodWeights = new ArrayList<Integer>();
+    private ArrayList<String> consumedItems;
+    private ArrayList<Integer> foodWeights;
 
-    // Constructor to initialize the behavior with a name, gender, and age
-    public Behavior(String name, String gender, int age) {
+    // Constructors to initialize the behavior with various parameters
+
+    // Constructor with only name (random gender and default age)
+    Bird(String name) {
+        initializeLists();
+        this.name = name;
+        getRandomGender();
+        getAge();
+        printDetails(); // Print bird details after creation
+    }
+
+    // Constructor with name and gender (default age)
+    Bird(String name, String gender) {
+        initializeLists();
+        this.name = name;
+        this.gender = gender;
+        getAge();
+        printDetails(); // Print bird details after creation
+    }
+
+    // Constructor with name and age (random gender)
+    Bird(String name, int age) {
+        initializeLists();
+        this.name = name;
+        getRandomGender();
+        this.age = age;
+        printDetails(); // Print bird details after creation
+    }
+
+    // Constructor with name, gender, and age
+    Bird(String name, String gender, int age) {
+        initializeLists();
         this.name = name;
         this.gender = gender;
         this.age = age;
+        printDetails(); // Print bird details after creation
+    }
+
+    // Method to initialize ArrayLists for consumedItems and foodWeights
+    private void initializeLists() {
+        this.consumedItems = new ArrayList<>();
+        this.foodWeights = new ArrayList<>();
     }
 
     // Method to check if the total food weight exceeds the bird weight
@@ -26,6 +62,14 @@ public class Behavior {
         if (totalFoodWeight > birdWeight) {
             System.out.println("Oh no! Seems like the bird ate too much!");
             eject();
+        }
+    }
+
+    // Method to print bird details if the name is not null
+    void printDetails() {
+        if (name != null) {
+            System.out.println(birdDetails());
+            System.out.println("-".repeat(40));
         }
     }
 
@@ -52,7 +96,7 @@ public class Behavior {
     // Method to simulate the bird ejecting all consumed food
     void eject() {
         while (!consumedItems.isEmpty()) {
-            String foodName = consumedItems.remove(0);
+            consumedItems.remove(0);
             int foodWeight = foodWeights.remove(0);
             System.out.println(foodWeight + " g has been pooped out");
             // Update the total food weight
@@ -65,7 +109,7 @@ public class Behavior {
     void eject(String release) {
         int foodWeight = 0;
         if (consumedItems.isEmpty()) {
-            System.out.println("This bird haven't eaten anything yet.");
+            System.out.println("This bird hasn't eaten anything yet.");
         } else if (consumedItems.contains(release)) {
             for (int i = 0; i < consumedItems.size(); i++) {
                 String foodName = consumedItems.get(i);
@@ -81,40 +125,39 @@ public class Behavior {
         }
     }
 
-    Behavior breed(Behavior parent) {
-        if(parent.gender == null)  {
+    // Method to breed a new bird based on gender compatibility
+    Bird breed(Bird parent) {
+        System.out.println("\"" + this.name + "\" trying to breed with \"" + parent.name + "\"");
+        if (parent.gender == null) {
             return null;
         } else if (("Male".equals(this.gender) && "Female".equals(parent.gender))
                 || ("Female".equals(this.gender) && "Male".equals(parent.gender))) {
             String left = this.name.substring(0, 1);
             String right = parent.name.substring(0, 1);
-            String newName = left.charAt(0) + right.charAt(0);
+            String babyName = String.valueOf(left.charAt(0)) + String.valueOf(right.charAt(0));
             System.out.println("\"" + this.name + "\" successfully bred with \"" + parent.name + "\"");
-            return new Behavior(newName,getRandomGender(),1);
+            System.out.println("-".repeat(40));
+            return new Bird(babyName);
         } else {
             System.out.println("Cannot breed with the same gender.");
+            System.out.println("-".repeat(40));
             return null;
         }
     }
 
-    void birdDetails() {
-        System.out.println("name: " + this.name + ", gender: " + this.gender + ", age: " + this.age
-        + ", bird weight: " + this.birdWeight + " g, food weight: " + this.totalFoodWeight + " g");
+    // Method to get a string representation of bird details
+    String birdDetails() {
+        return "name: " + this.name + ", gender: " + this.gender + ", age: " + this.age
+                + ", bird weight: " + this.birdWeight + " g, food weight: " + this.totalFoodWeight + " g";
     }
-    
-    private static String getRandomGender() {
-        String gender = null;
-        i++;
-        if (i > 2) {
-            gender = Math.random() < 0.5 ? "Male" : "Female";
-        } else {
-            if (i == 1) {
-                gender = "Male"; // Assign Male gender for bird 1
-            }
-            if (i == 2) {
-                gender = "Female"; // Assign Female gender for bird 2
-            }
-        }
-        return gender;
+
+    // Method to randomly assign a gender
+    void getRandomGender() {
+        this.gender = Math.random() < 0.5 ? "Male" : "Female";
+    }
+
+    // Method to initialize age to 1
+    void getAge() {
+        this.age = 1;
     }
 }
