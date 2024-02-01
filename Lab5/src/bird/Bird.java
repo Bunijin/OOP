@@ -1,6 +1,6 @@
 package bird;
 
-public class Bird {
+public class Main {
     
     public static void seperator() {
         System.out.println("=".repeat(80));
@@ -8,11 +8,11 @@ public class Bird {
     
     public static void main(String[] args) {
         int i = 0;
-        Behavior[] birds = new Behavior[11];
+        Bird[] birds = new Bird[11];
         seperator();
-        birds[i++] = new Behavior("Chicken","Male");    //Chicken
-        birds[i++] = new Behavior("Bear","Female",3);   //Bear
-        birds[i++] = birds[0].breed(birds[1]);          //CB
+        birds[i++] = new Bird("Chicken","Male");    //Chicken
+        birds[i++] = new Bird("Bear","Female",3);   //Bear
+        birds[i++] = birds[0].breed(birds[1]);      //CB
         seperator();
         // bird 1: Test eating and pooping
         birds[0].eat("spaghetti", 20);
@@ -33,10 +33,11 @@ public class Bird {
         seperator();
         birds[i++] = birds[0].breed(birds[2]);  //CC if [2] is Female
         birds[i++] = birds[1].breed(birds[0]);  //BC
-        birds[i++] = new Behavior("Purple",7);  //Purple
+        birds[i++] = new Bird("Purple",7);      //Purple
         birds[i++] = birds[5].breed(birds[0]);  //PC if Purple is Female
         birds[i++] = birds[1].breed(birds[5]);  //BP if Purple is Male
         System.out.println("Every Bird details");
+        //Display all existing bird details
         for (int num = 0; num < i; num++) {
             if (birds[num] != null) {
                 System.out.println(num + ". " + birds[num].birdDetails());
