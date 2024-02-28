@@ -41,47 +41,54 @@ public final class ChessBoard {
         System.out.println("  " + "=".repeat(71));
     }
 
-    public void create(String name, char color, String position) {
+    public void create(String name, boolean isWhite, String position) {
         int arrayPosX = position.charAt(0) - 'a';
         int arrayPosY = 8 - Integer.parseInt(position.substring(1));
         switch (name.toLowerCase()) {
-            case "pawn"     -> {board[arrayPosY][arrayPosX] = new Pawn("Pawn", color, position);    }
-            case "bishop"   -> {board[arrayPosY][arrayPosX] = new Bishop("Bishop", color, position);}
-            case "rook"     -> {board[arrayPosY][arrayPosX] = new Rook("Rook", color, position);    }
-            case "knight"   -> {board[arrayPosY][arrayPosX] = new Knight("Knight", color, position);}
-            case "king"     -> {board[arrayPosY][arrayPosX] = new King("King", color, position);    }
-            case "queen"    -> {board[arrayPosY][arrayPosX] = new Queen("Queen", color, position);  }
-            default         -> {board[arrayPosY][arrayPosX] = new Figure("Figure", color, position);}
+            case "pawn"     -> {board[arrayPosY][arrayPosX] = new Pawn  ("Pawn"  , isWhite, position);}
+            case "bishop"   -> {board[arrayPosY][arrayPosX] = new Bishop("Bishop", isWhite, position);}
+            case "rook"     -> {board[arrayPosY][arrayPosX] = new Rook  ("Rook"  , isWhite, position);}
+            case "knight"   -> {board[arrayPosY][arrayPosX] = new Knight("Knight", isWhite, position);}
+            case "king"     -> {board[arrayPosY][arrayPosX] = new King  ("King"  , isWhite, position);}
+            case "queen"    -> {board[arrayPosY][arrayPosX] = new Queen ("Queen" , isWhite, position);}
+            default         -> {board[arrayPosY][arrayPosX] = new Figure("Figure", isWhite, position);}
         }
-        System.out.println(board[arrayPosY][arrayPosX].getName() + " has been created on " + board[arrayPosY][arrayPosX].getPos());
-        display();
+        System.out.println(board[arrayPosY][arrayPosX].name + " has been created on " + board[arrayPosY][arrayPosX].position);
     }
 
     public void freeMove(String name, String destination) {
+        boolean found = false;
         // Check for every spot until finding the same name
         for (Figure[] boardX : board) {
             for (Figure boardYX : boardX) {
-                if (boardYX != null && boardYX.getName().equals(name)) {
+                if (boardYX != null && boardYX.name.equals(name)) {
                     // Move the piece position
+                    found = true;
                     boardYX.freeMove(destination, this);
-                    display();
                     return;
                 }
             }
+        }
+        if(!found)  {
+            System.out.println("There's no figure name [" + name + "] on the board.");
         }
     }
 
     public void move(String currentPosition, String destination)   {
+        boolean found = false;
         // Check for every spot until finding the same position
         for (Figure[] boardX : board) {
             for (Figure boardYX : boardX) {
-                if (boardYX != null && boardYX.getPos().equals(currentPosition)) {
+                if (boardYX != null && boardYX.position.equals(currentPosition)) {
                     // Move the piece position
+                    found = true;
                     boardYX.move(destination, this);
-                    display();
                     return;
                 }
             }
+        }
+        if(!found)  {
+            System.out.println("There's no figure on [" + currentPosition + "]");
         }
     }
 }
