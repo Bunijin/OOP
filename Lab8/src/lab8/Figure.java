@@ -18,7 +18,7 @@ public class Figure {
     // Info for display on the board
     public String getInfo() {
         String color = (isWhite) ? "W" : "B";
-        String formattedName = this.name.equalsIgnoreCase("knight") ? "Kn" : String.valueOf(this.name.charAt(0));
+        String formattedName = this.name.equalsIgnoreCase("knight") ? "N" : String.valueOf(this.name.charAt(0));
         return  color + formattedName + this.position;
     }
 
@@ -63,4 +63,22 @@ public class Figure {
         }
     }
 
+    boolean checkValidMove(String destination, int destX , int destY, ChessBoard board) {
+        if (0 > destX || destX > 7 || 0 > destY || destY > 7) {
+            System.out.println("The destination is out of range.");
+            return false;
+        } else if (this.position == destination) {
+            System.out.println("Cannot move to the same position!");
+            return false;
+        } else if (board.board[destY][destX] != null
+                && board.board[destY][destX].isWhite == this.isWhite) {
+            System.out.println("Cannot move! Destination is occupied by a piece of the same color.");
+            return false;
+        } else if ((!board.isWhiteTurn && isWhite) || (board.isWhiteTurn && !isWhite)) {
+            String turn = (board.isWhiteTurn) ? "White ": "Black ";
+            System.out.println(turn + "turns to move!");
+            return false;
+        }
+        return true;
+    }
 }

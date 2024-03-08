@@ -4,11 +4,17 @@ public class Main {
 
     public static void main(String[] args) {
         ChessBoard b = new ChessBoard();
-        b.create("Bishop",true,"e4");
-        b.create("rook",true,"e5");
-        b.create("queen",false, "c5");
+        b.setGame();
         b.display();
-        b.move("e4", "e4");
+        b.display();
+        b.move("e2","e4");
+        b.move("e7","e5");
+        b.move("g1","f3");
+        b.move("b8","c6");
+        b.move("f1","c4");
+        b.move("g8","f6");
+        b.move("b1","c3");
+        b.move("f8","c5");
         b.display();
     }
     

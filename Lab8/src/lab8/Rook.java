@@ -11,26 +11,21 @@ public class Rook extends Figure {
         // Extract current and destination coordinates
         int currentX = this.position.charAt(0) - 'a';
         int currentY = 8 - Integer.parseInt(this.position.substring(1));
-        int destinationX = destination.charAt(0) - 'a';
-        int destinationY = 8 - Integer.parseInt(destination.substring(1));
-
-        if ((0 > destinationX && destinationX > 7) && (0 > destinationY && destinationY > 7)) {
-            System.out.println("The destination is out of range.");
-            return;
-        } else if (board.board[destinationY][destinationX].isWhite == this.isWhite) {
-            System.out.println("Cannot move! Destination is occupied by a piece of the same color.");
+        int destX = destination.charAt(0) - 'a';
+        int destY = 8 - Integer.parseInt(destination.substring(1));
+        if(!checkValidMove(destination, destX , destY, board)) {
             return;
         }
         // Check if the destination is along vertical or horizontal
-        if (currentX == destinationX || currentY == destinationY) {
+        if (currentX == destX || currentY == destY) {
             // Determine the direction of movement
-            int directionX = Integer.compare(destinationX, currentX);
-            int directionY = Integer.compare(destinationY, currentY);
+            int directionX = Integer.compare(destX, currentX);
+            int directionY = Integer.compare(destY, currentY);
             // Initialize variables for checking along the path
             int checkX = currentX + directionX;
             int checkY = currentY + directionY;
             // Check for obstructions along the path
-            while (checkX != destinationX || checkY != destinationY) {
+            while (checkX != destX || checkY != destY) {
                 if (board.board[checkY][checkX] != null) {
                     System.out.println("Cannot move! Path is obstructed by " + board.board[checkY][checkX].name);
                     return;
@@ -39,17 +34,18 @@ public class Rook extends Figure {
                 checkY += directionY;
             }
             board.board[currentY][currentX] = null;
-            board.board[destinationY][destinationX] = this;
+            board.board[destY][destX] = this;
             this.position = destination;
+            board.isWhiteTurn = !board.isWhiteTurn;
+
+        if (board.board[destY][destX] == null) {
+            System.out.println(this.name + " moved successfully.");
+        } else if (board.board[destY][destX].isWhite != this.isWhite) {
+            System.out.println(this.name + " has captured " + board.board[destY][destX].name);
+        }
         } else {
             System.out.println("Invalid move for rook!");
             return;
-        }
-
-        if (board.board[destinationY][destinationX] == null) {
-            System.out.println(this.name + " moved successfully.");
-        } else if (board.board[destinationY][destinationX].isWhite != this.isWhite) {
-            System.out.println(this.name + " has captured " + board.board[destinationY][destinationX].name);
         }
     }
 }
