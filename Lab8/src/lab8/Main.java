@@ -1,21 +1,31 @@
 package lab8;
 
+import java.util.Scanner;
+
 public class Main {
 
     public static void main(String[] args) {
         ChessBoard b = new ChessBoard();
+        Scanner input = new Scanner(System.in);
         b.setGame();
-        b.display();
-        b.display();
-        b.move("e2","e4");
-        b.move("e7","e5");
-        b.move("g1","f3");
-        b.move("b8","c6");
-        b.move("f1","c4");
-        b.move("g8","f6");
-        b.move("b1","c3");
-        b.move("f8","c5");
-        b.display();
+        String prompt = "";
+        String destination = "";
+        theLoop: while (!prompt.equals("exit") || !destination.equals("exit")) {
+            String colours = (b.isWhiteTurn) ? "White's turn" : "Black's turn";
+            System.out.println(colours + "\nWhat piece do you want to move? [name(freeMove) or position(move)]");
+            prompt = input.nextLine();
+            if (prompt.equals("exit"))
+                break theLoop;
+            System.out.println("Where do you want to move to?");
+            destination = input.nextLine();
+            if (destination.equals("exit"))
+                break theLoop;
+            if (Character.isDigit(prompt.toLowerCase().charAt(1))) {
+                b.move(prompt, destination);
+            } else {
+                b.freeMove(prompt, destination);
+            }
+        }
+        input.close();
     }
-    
 }

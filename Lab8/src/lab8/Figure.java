@@ -1,13 +1,10 @@
 package lab8;
 
-import java.util.ArrayList;
-
 public class Figure {
 
     protected final String name;
     protected final boolean isWhite;
     protected String position;
-    ArrayList<String> movableList = new ArrayList<String>();
 
     public Figure(String name, boolean isWhite, String position) {
         this.name = name;
@@ -15,67 +12,51 @@ public class Figure {
         this.position = position;
     }
 
-    // Info for display on the board
     public String getInfo() {
         String color = (isWhite) ? "W" : "B";
         String formattedName = this.name.equalsIgnoreCase("knight") ? "N" : String.valueOf(this.name.charAt(0));
-        return  color + formattedName + this.position;
+        return color + formattedName + this.position;
     }
 
-    public void move(String position, ChessBoard board) {
-    }
-
-    void updateMovableList(ChessBoard board) {
-        this.movableList.clear();
-        for (Figure[] boardX : board.board) {
-            for (Figure boardYX : boardX) {
-                if(boardYX == null || boardYX.isWhite != this.isWhite) {
-                    //this.movableList.add(this.position);
-                }
-            }
-        }
+    public void move(String destination, ChessBoard board) {
+        freeMove(destination, board);
     }
 
     public void freeMove(String destination, ChessBoard board) {
-
         int currentX = this.position.charAt(0) - 'a';
         int currentY = 8 - Integer.parseInt(this.position.substring(1));
-        int destinationX = destination.charAt(0) - 'a';
-        int destinationY = 8 - Integer.parseInt(destination.substring(1));
+        int destX = destination.charAt(0) - 'a';
+        int destY = 8 - Integer.parseInt(destination.substring(1));
 
-        // Check if this spot is empty or isn't the same color as this piece
-        if (board.board[destinationY][destinationX] == null
-                || board.board[destinationY][destinationX].isWhite != this.isWhite) {
-
-            if (board.board[destinationY][destinationX] != null) {
-                // Show if the piece has captured anything
-                System.out.println(this.name + " has captured " + board.board[destinationY][destinationX].name);
+        if (0 > destX || destX > 7 || 0 > destY || destY > 7) {
+            System.out.println("The destination is out of range.");
+        } else if (this.position.equals(destination)) {
+            System.out.println("Cannot move to the same position!");
+        } else {
+            if (board.board[destY][destX] != null) {
+                System.out.println(this.name + " has captured " + board.board[destY][destX].name);
             } else {
-                // There's no piece on this spot
                 System.out.println(this.name + " moved successfully.");
             }
 
             board.board[currentY][currentX] = null;
-            board.board[destinationY][destinationX] = this;
+            board.board[destY][destX] = this;
             this.position = destination;
-        } else {
-            System.out.println("Cannot move! Due to the same color!");
         }
     }
 
-    boolean checkValidMove(String destination, int destX , int destY, ChessBoard board) {
+    boolean checkValidMove(String destination, int destX, int destY, ChessBoard board) {
         if (0 > destX || destX > 7 || 0 > destY || destY > 7) {
             System.out.println("The destination is out of range.");
             return false;
-        } else if (this.position == destination) {
+        } else if (this.position.equals(destination)) {
             System.out.println("Cannot move to the same position!");
             return false;
-        } else if (board.board[destY][destX] != null
-                && board.board[destY][destX].isWhite == this.isWhite) {
+        } else if (board.board[destY][destX] != null && board.board[destY][destX].isWhite == this.isWhite) {
             System.out.println("Cannot move! Destination is occupied by a piece of the same color.");
             return false;
         } else if ((!board.isWhiteTurn && isWhite) || (board.isWhiteTurn && !isWhite)) {
-            String turn = (board.isWhiteTurn) ? "White ": "Black ";
+            String turn = (board.isWhiteTurn) ? "White " : "Black ";
             System.out.println(turn + "turns to move!");
             return false;
         }

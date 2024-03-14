@@ -8,23 +8,21 @@ public class Bishop extends Figure {
 
     @Override
     public void move(String destination, ChessBoard board) {
-        // Extract current and destination coordinates
         int currentX = this.position.charAt(0) - 'a';
         int currentY = 8 - Integer.parseInt(this.position.substring(1));
         int destX = destination.charAt(0) - 'a';
         int destY = 8 - Integer.parseInt(destination.substring(1));
-        if(!checkValidMove(destination, destX , destY, board)) {
+
+        if (!checkValidMove(destination, destX, destY, board)) {
             return;
         }
-        // Check if the move is along diagonal path
+
         if (Math.abs(currentX - destX) == Math.abs(currentY - destY)) {
-            // Determine the direction of movement
             int directionX = Integer.compare(destX, currentX);
             int directionY = Integer.compare(destY, currentY);
-            // Initialize variables for checking along the path
             int checkX = currentX + directionX;
             int checkY = currentY + directionY;
-            // Check for obstructions along the path
+
             while (checkX != destX && checkY != destY) {
                 if (board.board[checkY][checkX] != null) {
                     System.out.println("Cannot move! Path is obstructed by " + board.board[checkY][checkX].name);
@@ -33,7 +31,7 @@ public class Bishop extends Figure {
                 checkX += directionX;
                 checkY += directionY;
             }
-            // Setting board position
+
             board.board[currentY][currentX] = null;
             board.board[destY][destX] = this;
             this.position = destination;
