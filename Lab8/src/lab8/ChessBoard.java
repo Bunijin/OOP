@@ -52,21 +52,6 @@ public final class ChessBoard {
             System.out.println("  " + "=".repeat(71));
     }
 
-    public void create(String name, boolean isWhite, String position) {
-        int arrayPosX = position.charAt(0) - 'a';
-        int arrayPosY = 8 - Integer.parseInt(position.substring(1));
-        switch (name.toLowerCase()) {
-            case "pawn" -> board[arrayPosY][arrayPosX] = new Pawn("Pawn", isWhite, position);
-            case "bishop" -> board[arrayPosY][arrayPosX] = new Bishop("Bishop", isWhite, position);
-            case "rook" -> board[arrayPosY][arrayPosX] = new Rook("Rook", isWhite, position);
-            case "knight" -> board[arrayPosY][arrayPosX] = new Knight("Knight", isWhite, position);
-            case "king" -> board[arrayPosY][arrayPosX] = new King("King", isWhite, position);
-            case "queen" -> board[arrayPosY][arrayPosX] = new Queen("Queen", isWhite, position);
-            default -> board[arrayPosY][arrayPosX] = new Figure("Figure", isWhite, position);
-        }
-        System.out.println(board[arrayPosY][arrayPosX].name + " has been created on " + board[arrayPosY][arrayPosX].position);
-    }
-
     public void freeMove(String name, String destination) {
         for (Figure[] boardX : board) {
             for (Figure boardYX : boardX) {
