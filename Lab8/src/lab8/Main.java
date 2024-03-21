@@ -8,18 +8,18 @@ public class Main {
         ChessBoard b = new ChessBoard();
         Scanner input = new Scanner(System.in);
         b.setGame();
-        String prompt = "";
-        String destination = "";
-        theLoop: while (!prompt.equals("exit") || !destination.equals("exit")) {
+        String prompt;
+        String destination;
+        while (true) {
             String colours = (b.isWhiteTurn) ? "White's turn" : "Black's turn";
             System.out.println(colours + "\nWhat piece do you want to move? [name(freeMove) or position(move)]");
             prompt = input.nextLine();
             if (prompt.equals("exit"))
-                break theLoop;
+                break;
             System.out.println("Where do you want to move to?");
             destination = input.nextLine();
             if (destination.equals("exit"))
-                break theLoop;
+                break;
             if (Character.isDigit(prompt.toLowerCase().charAt(1))) {
                 b.move(prompt, destination);
             } else {
