@@ -14,17 +14,14 @@ public class Pawn extends Figure {
         int currentY = 8 - Integer.parseInt(this.position.substring(1));
         int destX = destination.charAt(0) - 'a';
         int destY = 8 - Integer.parseInt(destination.substring(1));
-
         if (checkValidMove(destination, destX, destY, board)) {
             return;
         }
-
         if (isValidMoveForPawn(destX, destY, currentX, currentY, isWhite, board)) {
             int directionX = Integer.compare(destX, currentX);
             int directionY = Integer.compare(destY, currentY);
             int checkX = currentX + directionX;
             int checkY = currentY + directionY;
-
             while (checkX != destX || checkY != destY) {
                 if (board.board[checkY][checkX] != null) {
                     System.out.println("Cannot move! Path is obstructed by " + board.board[checkY][checkX].name);
@@ -34,7 +31,6 @@ public class Pawn extends Figure {
                 checkY += directionY;
             }
             board.board[currentY][currentX] = null;
-
             if (0 < destY && destY < 7) {
                 board.board[destY][destX] = this;
             } else {
@@ -42,11 +38,9 @@ public class Pawn extends Figure {
                 Scanner input = new Scanner(System.in);
                 boolean created = false;
                 String txt;
-
                 while (!created) {
                     txt = input.nextLine();
                     created = true;
-
                     switch (txt.toLowerCase()) {
                         case "knight":
                             board.board[destY][destX] = new Knight("Knight", this.isWhite, this.position);
@@ -71,7 +65,6 @@ public class Pawn extends Figure {
             }
             this.position = destination;
             board.isWhiteTurn = !board.isWhiteTurn;
-
             if (board.board[destY][destX] == null) {
                 System.out.println(this.name + " moved successfully.");
             } else if (board.board[destY][destX].isWhite != this.isWhite) {
