@@ -38,7 +38,6 @@ public class Figure {
             } else {
                 System.out.println(this.name + " moved successfully.");
             }
-
             board.board[currentY][currentX] = null;
             board.board[destY][destX] = this;
             this.position = destination;
@@ -48,18 +47,18 @@ public class Figure {
     boolean checkValidMove(String destination, int destX, int destY, ChessBoard board) {
         if (0 > destX || destX > 7 || 0 > destY || destY > 7) {
             System.out.println("The destination is out of range.");
-            return false;
+            return true;
         } else if (this.position.equals(destination)) {
             System.out.println("Cannot move to the same position!");
-            return false;
+            return true;
         } else if (board.board[destY][destX] != null && board.board[destY][destX].isWhite == this.isWhite) {
             System.out.println("Cannot move! Destination is occupied by a piece of the same color.");
-            return false;
+            return true;
         } else if ((!board.isWhiteTurn && isWhite) || (board.isWhiteTurn && !isWhite)) {
             String turn = (board.isWhiteTurn) ? "White " : "Black ";
             System.out.println(turn + "turns to move!");
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 }
