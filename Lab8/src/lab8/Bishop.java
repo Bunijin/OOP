@@ -31,7 +31,6 @@ public class Bishop extends Figure {
                 checkX += directionX;
                 checkY += directionY;
             }
-
             board.board[currentY][currentX] = null;
             board.board[destY][destX] = this;
             this.position = destination;
