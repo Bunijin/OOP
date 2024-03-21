@@ -13,7 +13,7 @@ public class Bishop extends Figure {
         int destX = destination.charAt(0) - 'a';
         int destY = 8 - Integer.parseInt(destination.substring(1));
 
-        if (!checkValidMove(destination, destX, destY, board)) {
+        if (checkValidMove(destination, destX, destY, board)) {
             return;
         }
 
@@ -44,7 +44,6 @@ public class Bishop extends Figure {
             }
         } else {
             System.out.println("Invalid move for bishop!");
-            return;
         }
     }
 }
