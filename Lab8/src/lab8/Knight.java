@@ -17,9 +17,7 @@ public class Knight extends Figure {
             return;
         }
 
-        if ((Math.abs(currentX - destX) == 2 && Math.abs(currentY - destY) == 1) ||
-            (Math.abs(currentY - destY) == 2 && Math.abs(currentX - destX) == 1)) {
-
+        if ((Math.abs(currentX - destX) == 2 && Math.abs(currentY - destY) == 1) || (Math.abs(currentY - destY) == 2 && Math.abs(currentX - destX) == 1)) {
             int directionX = Integer.compare(destX, currentX);
             int directionY = Integer.compare(destY, currentY);
             int checkX = currentX + directionX;
@@ -33,7 +31,6 @@ public class Knight extends Figure {
                 checkX += directionX;
                 checkY += directionY;
             }
-
             board.board[currentY][currentX] = null;
             board.board[destY][destX] = this;
             this.position = destination;
