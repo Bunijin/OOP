@@ -39,17 +39,17 @@ public final class ChessBoard {
     }
 
     public void display() {
-            System.out.println("\t a\t b\t c\t d\t e\t f\t g\t h\t ");
-            System.out.println("  " + "=".repeat(71));
-            for (int row = 0; row < board.length; row++) {
-                System.out.print((board.length - row) + " |\t");
-                for (int col = 0; col < board.length; col++) {
-                    if(board[row][col] != null) System.out.print(board[row][col].getInfo() + "\t");
-                    else System.out.print(" --\t");
-                }
-                System.out.println("|\n");
+        System.out.println("\t a\t b\t c\t d\t e\t f\t g\t h\t ");
+        System.out.println("  " + "=".repeat(71));
+        for (int row = 0; row < board.length; row++) {
+            System.out.print((board.length - row) + " |\t");
+            for (int col = 0; col < board.length; col++) {
+                if(board[row][col] != null) System.out.print(board[row][col].getInfo() + "\t");
+                else System.out.print(" --\t");
             }
-            System.out.println("  " + "=".repeat(71));
+            System.out.println("|\n");
+        }
+        System.out.println("  " + "=".repeat(71));
     }
 
     public void freeMove(String name, String destination) {
