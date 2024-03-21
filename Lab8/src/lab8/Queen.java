@@ -13,7 +13,7 @@ public class Queen extends Figure {
         int destX = destination.charAt(0) - 'a';
         int destY = 8 - Integer.parseInt(destination.substring(1));
 
-        if (!checkValidMove(destination, destX, destY, board)) {
+        if (checkValidMove(destination, destX, destY, board)) {
             return;
         }
 
@@ -31,7 +31,6 @@ public class Queen extends Figure {
                 checkX += directionX;
                 checkY += directionY;
             }
-
             board.board[currentY][currentX] = null;
             board.board[destY][destX] = this;
             this.position = destination;
@@ -44,7 +43,6 @@ public class Queen extends Figure {
             }
         } else {
             System.out.println("Invalid move for queen!");
-            return;
         }
     }
 }
